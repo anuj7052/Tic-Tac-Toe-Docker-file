@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe</title>
+</head>
+<body>
+    <h1>Tic Tac Toe</h1>
+    <table border="1">
+        {% for row in range(3) %}
+        <tr>
+            {% for col in range(3) %}
+            <td style="width:50px;height:50px;text-align:center">
+                {% if board[row * 3 + col] in [0,1,2,3,4,5,6,7,8] %}
+                <form method="POST" action="/move" style="display:inline;">
+                    <input type="hidden" name="cell" value="{{ row * 3 + col }}">
+                    <input type="submit" value="{{ board[row * 3 + col] }}" style="width:50px;height:50px;">
+                </form>
+                {% else %}
+                {{ board[row * 3 + col] }}
+                {% endif %}
+            </td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+    <p>It's {{ 'X' if turn == 1 else 'O' }}'s turn.</p>
+</body>
+</html>
