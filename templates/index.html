@@ -4,27 +4,82 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tic Tac Toe</title>
+    <style>
+        .move-log-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+            justify-content: center;
+        }
+
+        .move-box {
+            background-color: #e0f7fa;
+            width: 120px;
+            height: 120px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .move-box:hover {
+            transform: scale(1.05);
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+    </style>
 </head>
-<body>
-    <h1>Tic Tac Toe</h1>
-    <table border="1">
-        {% for row in range(3) %}
-        <tr>
-            {% for col in range(3) %}
-            <td style="width:50px;height:50px;text-align:center">
-                {% if board[row * 3 + col] in [0,1,2,3,4,5,6,7,8] %}
-                <form method="POST" action="/move" style="display:inline;">
-                    <input type="hidden" name="cell" value="{{ row * 3 + col }}">
-                    <input type="submit" value="{{ board[row * 3 + col] }}" style="width:50px;height:50px;">
-                </form>
-                {% else %}
-                {{ board[row * 3 + col] }}
+<body style="font-family: Arial, sans-serif; background-color: #f0f8ff; color: #333; display: flex; flex-direction: column; align-items: center; justify-content: center; height:100vh; margin: 0;">
+    <h1 style="margin-bottom: 8px; color: #4CAF50;">Tic Tac Toe</h1>
+    
+    <!-- Player's turn -->
+    <h2 style="margin-bottom: 10px; font-size: 24px;">Player {{ 'X' if turn == 1 else 'O' }}'s turn</h2>
+
+    <!-- Display AI suggested move -->
+    {% if ai_message %}
+        <p style="font-size: 20px; color: #2196F3;">{{ ai_message }}</p>
+    {% endif %}
+
+    <!-- Display move message -->
+    {% if move_message %}
+        <h3 style="margin: 10px 0; font-size: 20px; color: #ff5722;">{{ move_message }}</h3>
+    {% endif %}
+
+    <!-- Display the board -->
+    <form action="/move" method="POST" {% if game_over %} style="display:none;" {% endif %}>
+        <div>
+            {% for i in range(9) %}
+                <button type="submit" name="cell" value="{{ i }}" style="width: 100px; height: 100px;" {% if game_over %} disabled {% endif %}>
+                    {{ board[i] }}
+                </button>
+                {% if i == 2 or i == 5 %}
+                    <br>
                 {% endif %}
-            </td>
             {% endfor %}
-        </tr>
-        {% endfor %}
-    </table>
-    <p>It's {{ 'X' if turn == 1 else 'O' }}'s turn.</p>
+        </div>
+    </form>
+
+    <!-- Display the winner message if there is one -->
+    {% if winner %}
+        <h2>{{ winner }}</h2>
+        <a href="/reset"><button>Play Again</button></a> 
+    {% endif %}
+
+    <!-- Display the log of moves -->
+    <div style="margin-top: 20px;">
+        <h3 style="margin-top: 20px; font-size: 20px;">Move Log</h3>
+        
+        <div class="move-log-container">
+            {% for move in moves_log %}
+                <div class="move-box" onclick="alert('Move {{ loop.index }}: {{ move }}');">
+                    Move {{ loop.index }}: {{ move }}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
 </body>
 </html>
