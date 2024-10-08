@@ -4,10 +4,80 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Game History</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #4CAF50;
+            margin-bottom: 20px;
+            animation: fadeIn 1s;
+        }
+
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            animation: slideIn 1s;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ccc;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #e0f7fa;
+            transition: background-color 0.3s;
+        }
+
+        .reset-button {
+            padding: 10px;
+            font-size: 16px;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin-left: 10px; /* Add some space between links */
+        }
+
+        .reset-button:hover {
+            background-color: #d32f2f; /* Darker red color for the hover effect */
+            transform: scale(1.05); /* Slightly enlarge button on hover */
+        }
+
+        /* Animation Styles */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+    </style>
 </head>
 <body>
     <h1>Game History</h1>
-    <table border="1">
+    <table>
         <tr>
             <th>Game ID</th>
             <th>Moves</th>
@@ -23,5 +93,8 @@
     </table>
     <br>
     <a href="/">Back to Game</a>
+    <a href="/reset">
+        <button class="reset-button">Reset Game History</button>
+    </a>
 </body>
 </html>
